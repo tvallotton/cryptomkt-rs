@@ -63,13 +63,13 @@ impl Market {
     ///
     /// Get the current ticker
     ///
-    pub fn get_current_ticker(&self) -> CryptoMktResult<Ticker> {
+    pub async fn get_current_ticker(&self) -> CryptoMktResult<Ticker> {
         let mut params = HashMap::new();
         params.insert("market".to_string(), self.name.clone());
         let resp = self
             .api
             .call::<TickerResponse>(RequestMethod::Get(true), "ticker", params);
-        match resp {
+        match resp.await {
             Ok(value) => Ok(value.data[0].clone()),
             Err(e) => Err(e),
         }
@@ -78,7 +78,7 @@ impl Market {
     ///
     /// Get the order books
     ///
-    pub fn get_orders_book(
+    pub async fn get_orders_book(
         &self,
         orders_type: OrderType,
         page: u32,
@@ -93,7 +93,7 @@ impl Market {
         let resp = self
             .api
             .call::<BookResponse>(RequestMethod::Get(true), "book", params);
-        match resp {
+        match resp.await {
             Ok(value) => Ok(value.data),
             Err(e) => Err(e),
         }
@@ -102,7 +102,7 @@ impl Market {
     ///
     /// Get Trades
     ///
-    pub fn get_trades<'m>(
+    pub async  fn get_trades<'m>(
         &self,
         start: &'m str,
         end: &'m str,
@@ -119,7 +119,7 @@ impl Market {
         let resp = self
             .api
             .call::<TradeResponse>(RequestMethod::Get(true), "trades", params);
-        match resp {
+        match resp.await {
             Ok(value) => Ok(value.data),
             Err(e) => Err(e),
         }
@@ -128,7 +128,7 @@ impl Market {
     ///
     /// Get user orders by state
     ///
-    pub fn get_user_orders_by_state(
+    pub async fn get_user_orders_by_state(
         &self,
         state: OrderState,
         page: u32,
@@ -147,7 +147,7 @@ impl Market {
         let resp = self
             .api
             .call::<OrderResponse>(RequestMethod::Get(false), endpoint, params);
-        match resp {
+        match resp.await {
             Ok(value) => Ok(value.data),
             Err(e) => Err(e),
         }
@@ -155,7 +155,7 @@ impl Market {
     ///
     /// Create order
     ///
-    pub fn create_order(
+    pub async  fn create_order(
         &self,
         order_type: OrderType,
         amount: f32,
@@ -170,7 +170,7 @@ impl Market {
         let resp = self
             .api
             .call::<OrderResponse>(RequestMethod::Post, "orders/create", params);
-        match resp {
+        match resp.await {
             Ok(value) => Ok(value.data),
             Err(e) => Err(e),
         }
@@ -179,7 +179,7 @@ impl Market {
     ///
     /// Get Order status
     ///
-    pub fn get_order_status<'m>(&self, order_id: &'m str) -> CryptoMktResult<Order> {
+    pub async fn get_order_status<'m>(&self, order_id: &'m str) -> CryptoMktResult<Order> {
         let mut params = HashMap::new();
         params.insert("id".to_string(), order_id.to_string());
 
@@ -188,7 +188,7 @@ impl Market {
             "orders/status",
             params,
         );
-        match resp {
+        match resp.await {
             Ok(value) => Ok(value.data),
             Err(e) => Err(e),
         }
@@ -197,14 +197,14 @@ impl Market {
     ///
     /// Cancel Order
     ///
-    pub fn cancel_order<'m>(&self, order_id: &'m str) -> CryptoMktResult<Order> {
+    pub async fn cancel_order<'m>(&self, order_id: &'m str) -> CryptoMktResult<Order> {
         let mut params = HashMap::new();
         params.insert("id".to_string(), order_id.to_string());
 
         let resp =
             self.api
                 .call::<SimpleOrderResponse>(RequestMethod::Post, "orders/cancel", params);
-        match resp {
+        match resp.await {
             Ok(value) => Ok(value.data),
             Err(e) => Err(e),
         }
@@ -216,7 +216,7 @@ impl Market {
     /// An instant order corresponds to a purchase or sale request within the
     /// Instant Exchange of CryptoMarket.
     ///
-    pub fn get_order_instant(
+    pub async fn get_order_instant(
         &self,
         order_type: OrderType,
         amount: f32,
@@ -231,7 +231,7 @@ impl Market {
             "orders/instant/get",
             params,
         );
-        match resp {
+        match resp.await {
             Ok(value) => Ok(value.data),
             Err(e) => Err(e),
         }
@@ -240,7 +240,7 @@ impl Market {
     ///
     /// Create an instant order in the Instant Exchange of CryptoMarket
     ///
-    pub fn create_order_instant(
+    pub async fn create_order_instant(
         &self,
         order_type: OrderType,
         amount: f32,
@@ -253,7 +253,7 @@ impl Market {
         let resp =
             self.api
                 .call::<EmptyResponse>(RequestMethod::Post, "orders/instant/create", params);
-        match resp {
+        match resp.await {
             Ok(value) => Ok(value.data),
             Err(e) => Err(e),
         }

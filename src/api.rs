@@ -80,7 +80,7 @@ impl CryptoMktApi {
     ///
     /// let api = CryptoMktApi::new("<API Key>", "<Secret Key>");
     /// let resp = api.call::<MarketResponse>(RequestMethod::Get(true), "market", HashMap::new());
-    /// match resp {
+    /// match resp.await {
     ///     Ok(value) => {
     ///         let mut market_list = Vec::new();
     ///         for it in value.data {
@@ -99,7 +99,7 @@ impl CryptoMktApi {
     ///     `endpoint`: Endpoint
     ///     `payload`: Payload
     ///
-    pub fn call<'a, T>(
+    pub async fn call<'a, T>(
         &self,
         method: RequestMethod,
         endpoint: &'a str,
@@ -109,8 +109,8 @@ impl CryptoMktApi {
         T: DeserializeOwned,
     {
         match method {
-            RequestMethod::Get(is_public) => self.i_api.get_edge(endpoint, payload, is_public),
-            RequestMethod::Post => self.i_api.post_edge(endpoint, payload),
+            RequestMethod::Get(is_public) => self.i_api.get_edge(endpoint, payload, is_public).await,
+            RequestMethod::Post => self.i_api.post_edge(endpoint, payload).await,
         }
     }
 }

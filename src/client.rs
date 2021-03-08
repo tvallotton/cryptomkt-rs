@@ -12,7 +12,7 @@
 //!
 //! let client = CryptoMktClient::new(API_KEY, API_SECRET);
 //! let markets = client.get_markets();
-//! for m in markets.iter() {
+//! for m in markets.await.iter() {
 //!     println!("{}", m.get_name());
 //!
 //!     // Get Current Ticker
@@ -57,11 +57,11 @@ impl CryptoMktClient {
     ///
     /// Get Market List
     ///
-    pub fn get_markets(&self) -> Vec<Market> {
+    pub async fn get_markets(&self) -> Vec<Market> {
         let resp =
             self.api
                 .call::<MarketResponse>(RequestMethod::Get(true), "market", HashMap::new());
-        match resp {
+        match resp.await {
             Ok(value) => {
                 let mut market_list = Vec::new();
                 for it in value.data {
@@ -86,11 +86,11 @@ impl CryptoMktClient {
     /// A balance corresponds to the status of your cryptocurrency and local wallets.
     /// This state contains the available balance, account balance and corresponding wallet.
     ///
-    pub fn get_balance(&self) -> CryptoMktResult<Vec<Balance>> {
+    pub async fn get_balance(&self) -> CryptoMktResult<Vec<Balance>> {
         let resp =
             self.api
                 .call::<BalanceResponse>(RequestMethod::Get(false), "balance", HashMap::new());
-        match resp {
+        match resp.await {
             Ok(value) => Ok(value.data),
             Err(e) => Err(e),
         }
@@ -99,7 +99,7 @@ impl CryptoMktClient {
     ///
     /// It allows you to create a payment order, delivering QRs and urls to pay.
     ///
-    pub fn create_payment_order<'a>(
+    pub async fn create_payment_order<'a>(
         &self,
         to_receive: f32,
         to_receive_currency: &'a str,
@@ -137,7 +137,7 @@ impl CryptoMktClient {
         let resp =
             self.api
                 .call::<PaymentResponse>(RequestMethod::Post, "payment/new_order", params);
-        match resp {
+        match resp.await {
             Ok(value) => Ok(value.data),
             Err(e) => Err(e),
         }
@@ -146,7 +146,7 @@ impl CryptoMktClient {
     ///
     /// Returns the status of a payment order
     ///
-    pub fn payment_order_status<'a>(&self, id: &'a str) -> CryptoMktResult<Payment> {
+    pub async fn  payment_order_status<'a>(&self, id: &'a str) -> CryptoMktResult<Payment> {
         let mut params = HashMap::new();
         params.insert("id".to_string(), id.to_string());
 
@@ -154,7 +154,7 @@ impl CryptoMktClient {
             self.api
                 .call::<PaymentResponse>(RequestMethod::Get(false), "payment/status", params);
 
-        match resp {
+        match resp.await {
             Ok(value) => Ok(value.data),
             Err(e) => Err(e),
         }
@@ -163,7 +163,7 @@ impl CryptoMktClient {
     ///
     /// Returns the list of generated payment orders
     ///
-    pub fn get_payment_orders<'a>(
+    pub async fn get_payment_orders<'a>(
         &self,
         start_date: &'a str,
         end_date: &'a str,
@@ -187,7 +187,7 @@ impl CryptoMktClient {
             params,
         );
 
-        match resp {
+        match resp.await {
             Ok(value) => Ok(value.data),
             Err(e) => Err(e),
         }

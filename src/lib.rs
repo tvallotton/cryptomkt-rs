@@ -5,18 +5,20 @@
 //!
 //! ```
 //! extern crate cryptomkt;
+//! extern crate tokio; 
 //! use cryptomkt::{CryptoMktClient, OrderType};
 //!
 //! const API_KEY: &'static str = "<API_KEY>";
 //! const API_SECRET: &'static str = "<API SECRET>";
-//!
-//! fn main() {
+//! 
+//! #[tokio::main]
+//! async fn main() {
 //!
 //!     let client = CryptoMktClient::new(API_KEY, API_SECRET);
 //!
 //!     // Get the markets available in the exchange
 //!     let markets = client.get_markets();
-//!     for m in markets.iter() {
+//!     for m in markets.await.iter() {
 //!         println!("{}", m.get_name());
 //!
 //!         // GET current Ticker

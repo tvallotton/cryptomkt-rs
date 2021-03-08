@@ -96,7 +96,7 @@ where
     ///     params: Parámetros de la url
     ///     is_public: indica si el endpoint es public
     ///
-    pub fn get_edge<'a, T>(
+    pub async fn get_edge<'a, T>(
         &self,
         endpoint: &'a str,
         params: HashMap<String, String>,
@@ -107,7 +107,7 @@ where
     {
         let api_url = self.build_url(endpoint, &params);
         let headers = self.build_headers(endpoint, &params, is_public, true);
-        let result = self.req.get(api_url, headers)?;
+        let result = self.req.get(api_url, headers).await?;
         match serde_json::from_str(&result) {
             Ok(sr) => Ok(sr),
             Err(e) => {
@@ -123,7 +123,7 @@ where
     ///     params: Parámetros de la url
     ///     is_public: indica si el endpoint es public
     ///
-    pub fn post_edge<'a, T>(
+    pub async fn post_edge<'a, T>(
         &self,
         endpoint: &'a str,
         payload: HashMap<String, String>,
@@ -133,7 +133,7 @@ where
     {
         let api_url = self.build_url(endpoint, &HashMap::new());
         let headers = self.build_headers(endpoint, &payload, false, false);
-        let result = self.req.post(api_url, headers, payload)?;
+        let result = self.req.post(api_url, headers, payload).await?;
         match serde_json::from_str(&result) {
             Ok(sr) => Ok(sr),
             Err(e) => {

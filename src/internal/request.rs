@@ -1,11 +1,14 @@
-use reqwest::{header::HeaderMap, blocking::Client, StatusCode, Url};
+use reqwest::{header::HeaderMap, Client, StatusCode, Url};
 use std::collections::HashMap;
+use async_trait::async_trait;
+
 
 use crate::internal::errors::{CryptoMktErrorType, CryptoMktResult};
 
 ///
 /// Definición que deben cumplir para poder extaer datos mediante HTTP
 ///
+#[async_trait]
 pub trait HttpRequest {
     ///
     /// Result
@@ -16,14 +19,14 @@ pub trait HttpRequest {
     ///     url: Url
     ///     headers: HeaderMap
     ///
-    fn get(&self, url: Url, headers: HeaderMap) -> Self::Result;
+    async fn get(&self, url: Url, headers: HeaderMap) -> Self::Result;
     ///
     ///  Argumentos:
     ///     url: Url
     ///     headers: Headers
     ///     payload: Datos a enviar a la URL especificada
     ///
-    fn post(
+    async fn post(
         &self,
         url: Url,
         headers: HeaderMap,
@@ -105,7 +108,7 @@ impl CryptoMktRequest {
         }
     }
 }
-
+#[async_trait]
 impl HttpRequest for CryptoMktRequest {
 
     type Result = CryptoMktResult<String>;
@@ -115,11 +118,11 @@ impl HttpRequest for CryptoMktRequest {
     ///     url: Url
     ///     headers: HeaderMap
     ///
-    fn get(&self, url: Url, headers: HeaderMap) -> Self::Result {
-        let result = self.client.get(url).headers(headers).send();
+    async fn get(&self, url: Url, headers: HeaderMap) -> Self::Result {
+        let result = self.client.get(url).headers(headers).send().await;
         match result {
             Ok(resp) => match resp.status() {
-                StatusCode::OK => match resp.text() {
+                StatusCode::OK => match resp.text().await {
                     Ok(txt) => Ok(txt),
                     Err(e) => {
                         error!(target: "cryptomkt", "GET: Request Text details: {:?}", e);
@@ -140,17 +143,17 @@ impl HttpRequest for CryptoMktRequest {
     ///     headers: HeaderMap
     ///     payload: Datos a enviar a la URL especificada
     ///
-    fn post(
+    async fn post(
         &self,
         url: Url,
         headers: HeaderMap,
         payload: HashMap<String, String>,
     ) -> Self::Result {
-        let result = self.client.post(url).headers(headers).form(&payload).send();
+        let result = self.client.post(url).headers(headers).form(&payload).send().await;
 
         match result {
             Ok(resp) => match resp.status() {
-                StatusCode::OK => match resp.text() {
+                StatusCode::OK => match resp.text().await {
                     Ok(txt) => Ok(txt),
                     Err(e) => {
                         error!(target: "cryptomkt", "POST: Response Details: {:?}", e);
