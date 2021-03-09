@@ -219,6 +219,11 @@ impl Client {
 
         let mut params = HashMap::new();
         params.insert("market".into(), market.into());
+        params.insert("start".into(), "null".into());
+        params.insert("end".into(), "null".into());
+        params.insert("page".into(), "null".into());
+        params.insert("limit".into(), "null".into());
+        
         let resp = self.api.call::<Vec<Trade>>(RequestMethod::Get(false), "trades", params);
         resp.await
     }
