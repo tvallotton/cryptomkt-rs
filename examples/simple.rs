@@ -1,13 +1,9 @@
 ///
 /// Example
 ///
-
-
 use cryptomkt::{CryptoMktClient, OrderType};
-
 const API_KEY: &'static str = "<API_KEY>";
 const API_SECRET: &'static str = "<API SECRET>";
-
 
 
 #[tokio::main]
