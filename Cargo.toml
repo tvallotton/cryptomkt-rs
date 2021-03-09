@@ -28,18 +28,18 @@ doc = true
 [dependencies]
 # The core APIs, including the Serialize and Deserialize traits. Always
 # required when using Serde.
-serde = { version = "^1.0", features=["derive"] }
+serde = { version = "1.0", features=["derive"] }
 # Each data format lives in its own crate; the sample code below uses JSON
 # but you may be using a different one.
-serde_json = "^1.0"
+serde_json = "1.0"
 # HTTP Request Library
-reqwest =  { version = "^0.11.1" }
-bytes = "^0.4"
+reqwest =  { version = "0.11.1" }
+bytes = "0.4"
 # Log
-log = "^0.4"
+log = "0.4"
 # Cryptography
-ring = "^0.16"
+ring = "0.16"
 async-trait= "0.1.47"
 [dependencies.tokio] 
 version = "1.2"
-features = ["macros", "rt"]
+features = ["full"]
