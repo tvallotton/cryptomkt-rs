@@ -77,19 +77,22 @@ impl CryptoMktApi {
     /// use cryptomkt::{CryptoMktApi, Market, RequestMethod};
     /// use cryptomkt::response::MarketResponse;
     /// use std::collections::HashMap;
-    ///
-    /// let api = CryptoMktApi::new("<API Key>", "<Secret Key>");
-    /// let resp = api.call::<MarketResponse>(RequestMethod::Get(true), "market", HashMap::new());
-    /// match resp.await {
-    ///     Ok(value) => {
-    ///         let mut market_list = Vec::new();
-    ///         for it in value.data {
-    ///             market_list.push(Market::new(api.clone(), it.clone().as_str()));
+    /// 
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = CryptoMktApi::new("<API Key>", "<Secret Key>");
+    ///     let resp = api.call::<MarketResponse>(RequestMethod::Get(true), "market", HashMap::new());
+    ///     match resp.await {
+    ///         Ok(value) => {
+    ///             let mut market_list = Vec::new();
+    ///             for it in value.data {
+    ///                 market_list.push(Market::new(api.clone(), it.clone().as_str()));
+    ///             }
+    ///             println!("{:?}", market_list[0].get_name());
     ///         }
-    ///         println!("{:?}", market_list[0].get_name());
-    ///     }
-    ///     Err(e) => {
-    ///         println!("{:?}", e);
+    ///         Err(e) => {
+    ///             println!("{:?}", e);
+    ///         }
     ///     }
     /// }
     /// ```

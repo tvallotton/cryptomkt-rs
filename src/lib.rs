@@ -17,12 +17,12 @@
 //!     let client = CryptoMktClient::new(API_KEY, API_SECRET);
 //!
 //!     // Get the markets available in the exchange
-//!     let markets = client.get_markets();
-//!     for m in markets.await.iter() {
+//!     let markets = client.get_markets().await;
+//!     for m in markets.iter() {
 //!         println!("{}", m.get_name());
 //!
 //!         // GET current Ticker
-//!         match m.get_current_ticker() {
+//!         match m.get_current_ticker().await {
 //!             Ok(ticker) => {
 //!                 println!("{:?}", ticker);
 //!             }

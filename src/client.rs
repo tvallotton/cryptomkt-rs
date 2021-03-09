@@ -9,22 +9,25 @@
 //!
 //! const API_KEY: &'static str = "<API_KEY>";
 //! const API_SECRET: &'static str = "<API SECRET>";
+//! 
+//! #[tokio::main]
+//! async fn main() {
+//!     let client = CryptoMktClient::new(API_KEY, API_SECRET);
+//!     let markets = client.get_markets().await;
+//!     for m in markets.iter() {
+//!         println!("{}", m.get_name());
 //!
-//! let client = CryptoMktClient::new(API_KEY, API_SECRET);
-//! let markets = client.get_markets();
-//! for m in markets.await.iter() {
-//!     println!("{}", m.get_name());
-//!
-//!     // Get Current Ticker
-//!     match m.get_current_ticker() {
-//!         Ok(ticker) => {
-//!           println!("{:?}", ticker);
+//!         // Get Current Ticker
+//!      match m.get_current_ticker().await {
+//!             Ok(ticker) => {
+//!             println!("{:?}", ticker);
+//!             }
+//!             Err(e) => {
+//!             println!("{:?}", e);
+//!             }
 //!         }
-//!         Err(e) => {
-//!            println!("{:?}", e);
-//!         }
-//!       }
 //!     }
+//! }
 //! ```
 //!
 
