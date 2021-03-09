@@ -1,8 +1,8 @@
 ///
 /// Example
 ///
-extern crate cryptomkt;
-extern crate tokio;
+
+
 use cryptomkt::{CryptoMktClient, OrderType};
 
 const API_KEY: &'static str = "<API_KEY>";

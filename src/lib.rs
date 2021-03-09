@@ -4,8 +4,6 @@
 //! Example where the last ticker is shown for each market available in the exchange market Criptomarket
 //!
 //! ```
-//! extern crate cryptomkt;
-//! extern crate tokio; 
 //! use cryptomkt::{CryptoMktClient, OrderType};
 //!
 //! const API_KEY: &'static str = "<API_KEY>";

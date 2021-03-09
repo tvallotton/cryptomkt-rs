@@ -4,7 +4,6 @@
 //! Print the current tricker of all available markets
 //!
 //! ```
-//! extern crate cryptomkt;
 //! use cryptomkt::{CryptoMktClient, OrderType};
 //!
 //! const API_KEY: &'static str = "<API_KEY>";

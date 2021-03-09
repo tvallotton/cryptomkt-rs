@@ -24,7 +24,6 @@ pub enum RequestMethod {
 /// ## Example
 ///
 /// ```
-/// extern crate cryptomkt;
 /// use cryptomkt::CryptoMktApi;
 ///
 /// let api = CryptoMktApi::new("<API Key>", "<Secret Key>");
@@ -73,7 +72,6 @@ impl CryptoMktApi {
     /// Function that you can use to make request over Cryptomarket API
     ///
     /// ```
-    /// extern crate cryptomkt;
     /// use cryptomkt::{CryptoMktApi, Market, RequestMethod};
     /// use cryptomkt::response::MarketResponse;
     /// use std::collections::HashMap;
