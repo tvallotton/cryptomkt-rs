@@ -4,7 +4,7 @@ This fork of [gallegogt/cryptomkt-rs](https://github.com/gallegogt/cryptomkt-rs)
 
 
 
-``rust 
+```rust 
 use cryptomkt::{CryptoMktClient, OrderType};
 const API_KEY: &'static str = "<API_KEY>";
 const API_SECRET: &'static str = "<API SECRET>";
@@ -50,8 +50,8 @@ async fn main() {
     }
 }
 
-
 ```
+
 # Support My Efforts
 
 [Gallegogt](https://github.com/gallegogt) programmed this lib for fun and he does his best effort to support those that have issues with it, please return the favor and support him.
