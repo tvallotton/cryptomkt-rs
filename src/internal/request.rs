@@ -1,7 +1,7 @@
 use reqwest::{header::HeaderMap, Client, StatusCode, Url};
 use std::collections::HashMap;
 use async_trait::async_trait;
-
+use log::error;
 
 use crate::internal::errors::{CryptoMktErrorType, CryptoMktResult};
 
