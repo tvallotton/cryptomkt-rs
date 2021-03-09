@@ -5,13 +5,13 @@ This fork of [gallegogt/cryptomkt-rs](https://github.com/gallegogt/cryptomkt-rs)
 
 
 ```rust 
-use cryptomkt::{CryptoMktClient, OrderType};
+use cryptomkt::{Client, OrderType};
 const API_KEY: &'static str = "<API_KEY>";
 const API_SECRET: &'static str = "<API SECRET>";
 
 #[tokio::main]
 async fn main() {
-    let client = CryptoMktClient::new(API_KEY, API_SECRET);
+    let client = Client::new(API_KEY, API_SECRET);
 
     // Get all markets available
     let markets = client.get_markets().await;
