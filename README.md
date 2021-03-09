@@ -1,9 +1,9 @@
 # [UNOFFICIAL] Criptomarket API
 
-This fork of [gallegogt/cryptomkt-rs](https://github.com/gallegogt/cryptomkt-rs). It allows do make non blocking calls.
+This fork of [gallegogt/cryptomkt-rs](https://github.com/gallegogt/cryptomkt-rs). It allows do make non blocking calls. 
 
 
-
+# Examples
 ```rust 
 use cryptomkt::{Client, OrderType};
 const API_KEY: &'static str = "<API_KEY>";
