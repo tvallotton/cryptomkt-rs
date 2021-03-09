@@ -4,14 +4,14 @@
 //! Print the current tricker of all available markets
 //!
 //! ```
-//! use cryptomkt::{CryptoMktClient, OrderType};
+//! use cryptomkt::{Client, OrderType};
 //!
 //! const API_KEY: &'static str = "<API_KEY>";
 //! const API_SECRET: &'static str = "<API SECRET>";
 //! 
 //! #[tokio::main]
 //! async fn main() {
-//!     let client = CryptoMktClient::new(API_KEY, API_SECRET);
+//!     let client = Client::new(API_KEY, API_SECRET);
 //!     let markets = client.get_markets().await;
 //!     for m in markets.iter() {
 //!         println!("{}", m.get_name());
@@ -43,16 +43,16 @@ use std::collections::HashMap;
 ///
 /// CryptoMkt Client
 ///
-pub struct CryptoMktClient {
+pub struct Client {
     api: CryptoMktApi,
 }
 
-impl CryptoMktClient {
+impl Client {
     ///
     /// Create the new Client instance
     ///
     pub fn new<'a>(api_key: &'a str, secret_key: &'a str) -> Self {
-        CryptoMktClient {
+        Client {
             api: CryptoMktApi::new(api_key, secret_key),
         }
     }
