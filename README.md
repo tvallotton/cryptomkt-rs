@@ -1,6 +1,6 @@
 # [UNOFFICIAL] Criptomarket API
 
-This fork of [gallegogt/cryptomkt-rs](https://github.com/gallegogt/cryptomkt-rs). It allows do make non blocking calls. 
+This is a fork of [gallegogt/cryptomkt-rs](https://github.com/gallegogt/cryptomkt-rs). It allows do make non blocking calls. 
 
 
 # Examples
