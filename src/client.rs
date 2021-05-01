@@ -197,35 +197,3 @@ impl Client {
     }
 
 
-
-    /// 
-    /// returns a list of all trades (executed orders) of a market between
-    /// the start date, until the end date. the earlier trades first, and the
-    /// older last. stored in the "data" member of a dict
-    /// If no start date is given, returns trades since 2020-02-17.
-    /// If no end date is given, returns trades until the present moment.
-    /// 
-    /// Required Arguments:
-    ///     market: A market pair as a string. Is the specified market to get
-    ///           the book from.
-    ///           e.g: 'ETHCLP'.
-    /// Optional Arguments:
-    ///     start: The older date to get trades from, inclusive.
-    ///     end: The earlier date to get trades from, exclusive.
-    ///     page: Page number to query. Default is 0
-    ///     limit: Number of orders returned in each page. Default is 20.
-
-    pub async fn get_trades(self, market: &str) -> CryptoMktResult<Vec<Trade>> {
-
-        let mut params = HashMap::new();
-        params.insert("market".into(), market.into());
-        params.insert("start".into(), "null".into());
-        params.insert("end".into(), "null".into());
-        params.insert("page".into(), "null".into());
-        params.insert("limit".into(), "null".into());
-        
-        let resp = self.api.call::<Vec<Trade>>(RequestMethod::Get(false), "trades", params);
-        resp.await
-    }
-
-}
